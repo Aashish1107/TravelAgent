@@ -3,20 +3,43 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-alert-dialog": "^1.1.14",
+    "@radix-ui/react-aspect-ratio": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@replit/vite-plugin-cartographer": "^0.2.7",
+    "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@tanstack/react-query": "^5.80.7",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.515.0",
+    "radix-ui": "^1.4.2",
     "react": "^19.1.0",
+    "react-day-picker": "^9.7.0",
     "react-dom": "^19.1.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-hook-form": "^7.57.0",
+    "react-resizable-panels": "^3.0.2",
+    "react-scripts": "^0.0.0",
+    "read-scripts": "^1.1.0",
+    "recharts": "^2.15.3",
+    "tailwind-merge": "^3.3.1",
+    "vaul": "^1.1.2",
+    "web-vitals": "^2.1.4",
+    "wouter": "^3.7.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "build:css": "tailwindcss -i ./src/index.css -o ./dist/output.css --minify",
+    "test": "vitest",
+    "eject": "echo 'Eject is not supported in Vite!'"
   },
   "eslintConfig": {
     "extends": [
@@ -35,5 +58,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.1",
+    "@types/react-dom": "^19.1.6",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.5",
+    "tailwindcss": "^4.1.10",
+    "vite": "^6.3.5"
   }
 }
