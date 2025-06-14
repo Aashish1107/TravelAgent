@@ -1,9 +1,9 @@
-import express from 'express';
-import { registerRoutes } from './routes';
-import { setupVite, serveStatic } from './vite';
+const express = require('express');
+const { registerRoutes } = require('./routes');
+const { setupVite, serveStatic } = require('./vite');
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Ensure "type": "module" is set in package.json
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -1,4 +1,4 @@
-import {
+const {
   pgTable,
   text,
   varchar,
@@ -8,8 +8,8 @@ import {
   serial,
   decimal,
   boolean,
-} from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+} = require("drizzle-orm/pg-core");
+const { createInsertSchema } = require("drizzle-zod");
 
 // Session storage table for authentication
 const sessions = pgTable(
@@ -96,7 +96,7 @@ const insertSavedSpotSchema = createInsertSchema(savedSpots);
 const insertAgentConversationSchema = createInsertSchema(agentConversations);
 const insertTripSchema = createInsertSchema(trips);
 
-export {
+module.exports = {
   sessions,
   users,
   travelSearches,

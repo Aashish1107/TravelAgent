@@ -1,6 +1,12 @@
-import { users, travelSearches, savedSpots, agentConversations, trips } from "./schema";
-import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+const {
+  users,
+  travelSearches,
+  savedSpots,
+  agentConversations,
+  trips,
+} = require("./schema");
+const { db } = require("./db");
+const { eq, desc, and } = require("drizzle-orm");
 
 class DatabaseStorage {
   // User operations
@@ -130,4 +136,4 @@ class DatabaseStorage {
 
 const storage = new DatabaseStorage();
 
-module.exports = { storage };export { storage };
+module.exports = { storage };

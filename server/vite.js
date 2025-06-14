@@ -1,6 +1,5 @@
-import { createServer } from "vite";
-import path from "path";
-import serveStatic from "serve-static";
+const { createServer } = require("vite");
+const path = require("path");
 
 function log(message, source = "express") {
   const formattedTime = new Intl.DateTimeFormat('en-US', {
@@ -29,10 +28,10 @@ async function setupVite(app, server) {
 }
 
 function serveStatic(app) {
-  app.use(serveStatic(path.resolve("dist/client")));
+  app.use(require("serve-static")(path.resolve("dist/client")));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve("dist/client/index.html"));
   });
 }
-export { log, setupVite, serveStatic };
+
 module.exports = { log, setupVite, serveStatic };

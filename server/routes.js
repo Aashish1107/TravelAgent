@@ -1,8 +1,8 @@
-import express from 'express';
-import { createServer } from 'http';
-import { storage } from './storage';
-import { setupAuth, authenticateJWT, optionalAuth } from './auth';
-import { z } from 'zod';
+const express = require('express');
+const { createServer } = require('http');
+const { storage } = require('./storage');
+const { setupAuth, authenticateJWT, optionalAuth } = require('./auth');
+const { z } = require('zod');
 
 const LocationSearchSchema = z.object({
   location: z.string().min(1),
@@ -359,4 +359,4 @@ async function registerRoutes(app) {
   return httpServer;
 }
 
-export { registerRoutes };
+module.exports = { registerRoutes };
