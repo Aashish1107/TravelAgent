@@ -132,7 +132,7 @@ export default function Landing() {
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-lg mb-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-                    <Compass className="h-8 w-8 text-white" />
+                    <Compass className="h-8 w-8 text-white icon1" />
                   </div>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
