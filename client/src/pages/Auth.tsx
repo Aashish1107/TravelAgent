@@ -120,7 +120,7 @@ export default function Auth() {
       <Card className="w-full max-w-md border-0 shadow-2xl bg-white/90 backdrop-blur-sm">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Compass className="h-8 w-8 text-primary" />
+            <Compass className="h-8 w-8 text-primary icon1" />
             <span className="text-2xl font-bold text-gray-900">TravelAgent Pro</span>
           </div>
           <CardTitle className="text-xl">Welcome to your travel companion</CardTitle>
@@ -129,8 +129,8 @@ export default function Auth() {
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+              <TabsTrigger className="text-center button-primary" value="login">Login</TabsTrigger>
+              <TabsTrigger className="text-center button-secondary" value="register">Register</TabsTrigger>
             </TabsList>
             
             {error && (
@@ -175,7 +175,7 @@ export default function Auth() {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-primary hover:bg-primary/90"
+                  className="w-full button-accent button-accent:hover/90"
                   disabled={isLoading}
                 >
                   {isLoading ? "Signing in..." : "Sign In"}
@@ -193,7 +193,7 @@ export default function Auth() {
 
               <Button 
                 variant="outline" 
-                className="w-full"
+                className="w-full button-destructive"
                 onClick={handleGoogleAuth}
                 disabled={isLoading}
               >
@@ -282,7 +282,7 @@ export default function Auth() {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-primary hover:bg-primary/90"
+                  className="w-full button-accent button-accent:hover/90"
                   disabled={isLoading}
                 >
                   {isLoading ? "Creating account..." : "Create Account"}
@@ -300,7 +300,7 @@ export default function Auth() {
 
               <Button 
                 variant="outline" 
-                className="w-full"
+                className="w-full button-destructive button-destructive:hover/90"
                 onClick={handleGoogleAuth}
                 disabled={isLoading}
               >

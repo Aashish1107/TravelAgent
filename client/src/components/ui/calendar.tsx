@@ -52,6 +52,9 @@ function Calendar({
         ...classNames,
       }}
       components={{
+        Caption: ({ className, ...props }: { className?: string }) => (
+          <div className={cn("flex items-center justify-between", className)} {...props} />
+        ),
         PrevButton: ({ className = "", ...props }: { className?: string }) => (
           <ChevronLeft className={cn("h-4 w-4", className)} {...props} />
         ),

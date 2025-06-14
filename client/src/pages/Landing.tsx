@@ -14,10 +14,10 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <Compass className="h-8 w-8 text-primary" />
+              <Compass className="h-8 w-8 text-primary icon1" />
               <span className="text-xl font-bold text-gray-900">TravelAgent Pro</span>
             </div>
-            <Button onClick={handleLogin} className="bg-primary hover:bg-primary/90">
+            <Button onClick={handleLogin} className="button-primary button-primary:hover">
               Get Started
             </Button>
           </div>
@@ -34,7 +34,7 @@ export default function Landing() {
             Let our AI travel agents find the perfect tourist spots and weather information for your destination. 
             Experience intelligent travel planning with real-time data and personalized recommendations.
           </p>
-          <Button onClick={handleLogin} size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
+          <Button onClick={handleLogin} size="lg" className="button-primary button-primary:hover/90 text-lg px-8 py-6">
             Start Your Journey
           </Button>
         </div>
@@ -44,7 +44,7 @@ export default function Landing() {
           <Card className="border-0 shadow-xl bg-white/60 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-8 w-8 text-primary" />
+                <MapPin className="h-8 w-8 text-primary icon1" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Smart Location Discovery</h3>
               <p className="text-gray-600">
@@ -56,7 +56,7 @@ export default function Landing() {
           <Card className="border-0 shadow-xl bg-white/60 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Cloud className="h-8 w-8 text-secondary" />
+                <Cloud className="h-8 w-8 text-secondary icon2" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Real-time Weather Intel</h3>
               <p className="text-gray-600">
@@ -68,7 +68,7 @@ export default function Landing() {
           <Card className="border-0 shadow-xl bg-white/60 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-accent" />
+                <Users className="h-8 w-8 text-accent icon3" />
               </div>
               <h3 className="text-xl font-semibold mb-3">AI-Powered Coordination</h3>
               <p className="text-gray-600">
@@ -93,7 +93,7 @@ export default function Landing() {
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="h-6 w-6 text-primary" />
+                  <Sparkles className="h-6 w-6 text-primary icon1" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Multi-Agent Architecture</h3>
@@ -105,7 +105,7 @@ export default function Landing() {
 
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Globe className="h-6 w-6 text-secondary" />
+                  <Globe className="h-6 w-6 text-secondary icon2" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2">MCP Protocol Integration</h3>
@@ -117,7 +117,7 @@ export default function Landing() {
 
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Compass className="h-6 w-6 text-accent" />
+                  <Compass className="h-6 w-6 text-accent icon3" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Real-time Data Sources</h3>
@@ -141,7 +141,7 @@ export default function Landing() {
                 <p className="text-gray-600 mb-6">
                   Experience the future of travel planning with AI agents that understand your preferences and provide personalized recommendations.
                 </p>
-                <Button onClick={handleLogin} className="bg-primary hover:bg-primary/90">
+                <Button onClick={handleLogin} className="button-primary button-primary:hover/90">
                   Try It Now
                 </Button>
               </div>
