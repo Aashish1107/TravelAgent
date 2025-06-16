@@ -16,6 +16,7 @@ class DatabaseStorage {
   }
 
   async getUserByEmail(email) {
+    console.log(db.select().from(users));
     const [user] = await db.select().from(users).where(eq(users.email, email));
     return user;
   }

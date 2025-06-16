@@ -25,7 +25,7 @@ export default function Home() {
     setCurrentLocation(locationData);
     
     try {
-      const response = await fetch('/api/search/location', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/search/location`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export default function Home() {
     if (!currentLocation) return;
     
     try {
-      const response = await fetch('/api/trips', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/trips`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ export default function Home() {
               isLoading={isLoading}
               onSaveSpot={async (spot) => {
                 try {
-                  await fetch('/api/spots/save', {
+                  await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/spots/save`, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',

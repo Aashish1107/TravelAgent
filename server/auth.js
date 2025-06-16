@@ -7,8 +7,10 @@ const session = require('express-session');
 const connectPg = require('connect-pg-simple');
 const { storage } = require('./storage');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET
+
+
 
 // Session configuration
 function getSession() {
@@ -219,7 +221,8 @@ function setupAuth(app) {
   app.post('/api/auth/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) {
-        return res.status(500).json({ message: 'Internal server error' });
+        console.error('Authentication error:', err);
+        return res.status(500).json({ message: 'Internal server error: ' + err.message });
       }
       
       if (!user) {

@@ -1,17 +1,23 @@
 const { Pool, neonConfig } = require('@neondatabase/serverless');
 const { drizzle } = require('drizzle-orm/neon-serverless');
 const ws = require("ws");
-const schema = require("./schema");
-
+const schema = require("./schema"); // Ensure this file exists and exports the correct schema
 neonConfig.webSocketConstructor = ws;
 
-if (!process.env.DATABASE_URL) {
+if (!process.env.DB_PASSWORD || !process.env.DB_USER || !process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_NAME) {
   throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
+    "DATABASE must be set. Did you forget to provision a database?",
   );
 }
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ 
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+});
 const db = drizzle({ client: pool, schema });
+console.log(db.select("email").from('users'));
 
 module.exports = { pool, db };

@@ -5,6 +5,7 @@ import { Compass, MapPin, Cloud, Users, Sparkles, Globe } from "lucide-react";
 export default function Landing() {
   const handleLogin = () => {
     window.location.href = "/auth";
+    
   };
 
   return (

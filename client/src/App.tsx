@@ -8,10 +8,10 @@ import NotFound from "./pages/not-found";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import dotenv from "dotenv";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
-
   // Show auth page if not authenticated and not loading
   if (!isLoading && !isAuthenticated) {
     return (
