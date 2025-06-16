@@ -1,7 +1,9 @@
 const { Pool, neonConfig } = require('@neondatabase/serverless');
 const { drizzle } = require('drizzle-orm/neon-serverless');
 const ws = require("ws");
-const schema = require("./schema"); // Ensure this file exists and exports the correct schema
+const schema = require("./schema");
+
+
 neonConfig.webSocketConstructor = ws;
 
 if (!process.env.DB_PASSWORD || !process.env.DB_USER || !process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_NAME) {
@@ -18,6 +20,5 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 const db = drizzle({ client: pool, schema });
-console.log(db.select("email").from('users'));
 
 module.exports = { pool, db };

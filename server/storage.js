@@ -5,6 +5,7 @@ const {
   agentConversations,
   trips,
 } = require("./schema");
+const schema = require("./schema");
 const { db } = require("./db");
 const { eq, desc, and } = require("drizzle-orm");
 
@@ -16,9 +17,17 @@ class DatabaseStorage {
   }
 
   async getUserByEmail(email) {
-    console.log(db.select().from(users));
-    const [user] = await db.select().from(users).where(eq(users.email, email));
-    return user;
+    try{
+      console.log("Email:", email);
+      console.log("Query 1");
+      console.log( await db.select().from(schema.users));
+      console.log("Query 2");
+      const [user] = await db.select().from(users).where(eq(users.email, email));
+      return user;
+    } catch (error) {
+      console.error("Error fetching user by email:", error);
+      throw new Error("Database error while fetching user by email");
+    }
   }
 
   async createUser(userData) {
