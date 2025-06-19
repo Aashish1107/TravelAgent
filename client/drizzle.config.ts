@@ -5,10 +5,12 @@ if (!process.env.DATABASE_URL) {
 }
 
 module.exports = defineConfig({
-  out: "./migrations",
-  schema: "./schema.js",
+  out: "./src/drizzle/migrations",
+  schema: "./src/drizzle/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
     url: process.env.DATABASE_URL,
   },
+  verbose: true,
+  strict: true,
 });

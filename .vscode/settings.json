@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "connectString": "postgresql://postgres:Clules1107@Postgre@localhost:5432/postgres",
+            "name": "TravelAgentDB"
+        }
+    ]
+}

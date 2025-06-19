@@ -17,17 +17,8 @@ class DatabaseStorage {
   }
 
   async getUserByEmail(email) {
-    try{
-      console.log("Email:", email);
-      console.log("Query 1");
-      console.log( await db.select().from(schema.users));
-      console.log("Query 2");
       const [user] = await db.select().from(users).where(eq(users.email, email));
       return user;
-    } catch (error) {
-      console.error("Error fetching user by email:", error);
-      throw new Error("Database error while fetching user by email");
-    }
   }
 
   async createUser(userData) {

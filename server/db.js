@@ -1,10 +1,7 @@
-const { Pool, neonConfig } = require('@neondatabase/serverless');
-const { drizzle } = require('drizzle-orm/neon-serverless');
-const ws = require("ws");
-const schema = require("./schema");
-
-
-neonConfig.webSocketConstructor = ws;
+const { cidr } = require('drizzle-orm/pg-core');
+const { drizzle } = require('drizzle-orm/postgres-js');
+const schema = require("./schema").default || require("./schema");
+const {Client} = require('pg');
 
 if (!process.env.DB_PASSWORD || !process.env.DB_USER || !process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_NAME) {
   throw new Error(
@@ -12,13 +9,16 @@ if (!process.env.DB_PASSWORD || !process.env.DB_USER || !process.env.DB_HOST || 
   );
 }
 
-const pool = new Pool({ 
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-});
-const db = drizzle({ client: pool, schema });
+const client = new Client({ connectionString: `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`});
 
-module.exports = { pool, db };
+const conn= client.connect()
+  .then(() => {console.log("Connected to the database");
+    //console.log(client);
+  })
+  .catch ((err) =>{
+    console.error("Database connection error:", err);
+    process.exit(1);
+  });
+const db = drizzle(process.env.DATABASE_URL);
+
+module.exports = { client, db };
