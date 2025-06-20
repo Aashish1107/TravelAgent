@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "../components/ui/alert";
 import { Compass, Mail, Lock, User, Chrome } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { queryClient } from "../lib/queryClient";
+import { navigate } from "wouter/use-browser-location";
 
 export default function Auth() {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +49,7 @@ export default function Auth() {
         });
 
         // Redirect will happen automatically via useAuth hook
+        window.location.href = "/"; // Redirect to home page
       } else {
         setError(data.message || "Login failed");
       }
@@ -101,6 +103,7 @@ export default function Auth() {
         });
 
         // Redirect will happen automatically via useAuth hook
+        window.location.href = "/"; // Redirect to home page
       } else {
         setError(data.message || "Registration failed");
       }
@@ -112,7 +115,8 @@ export default function Auth() {
   };
 
   const handleGoogleAuth = () => {
-    window.location.href = "/api/auth/google";
+    // Redirect to Google OAuth
+    
   };
 
   return (

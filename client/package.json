@@ -34,6 +34,7 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.58.1",
     "react-resizable-panels": "^3.0.3",
+    "react-router-dom": "^7.6.2",
     "react-scripts": "^0.0.0",
     "read-scripts": "^1.1.0",
     "recharts": "^2.15.3",

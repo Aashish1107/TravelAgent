@@ -1,4 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { is } from "drizzle-orm";
+import {useNavigate} from "react-router-dom";
+import { navigate } from "wouter/use-browser-location";
 
 async function fetchUser() {
   const accessToken = localStorage.getItem("accessToken");
@@ -7,7 +10,7 @@ async function fetchUser() {
     throw new Error("No access token");
   }
 
-  const response = await fetch("/api/auth/user", {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/user`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -31,7 +34,7 @@ async function fetchUser() {
         localStorage.setItem("refreshToken", tokens.refreshToken);
         
         // Retry original request with new token
-        const retryResponse = await fetch("/api/auth/user", {
+        const retryResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/user`, {
           headers: {
             Authorization: `Bearer ${tokens.accessToken}`,
           },
@@ -52,21 +55,21 @@ async function fetchUser() {
   if (!response.ok) {
     throw new Error("Failed to fetch user");
   }
-
   return response.json();
 }
 
 export function useAuth() {
+  //console.log("useAuth hook called");
   const { data: user, isLoading, error } = useQuery({
     queryKey: ["/api/auth/user"],
     queryFn: fetchUser,
     retry: false,
     staleTime: 5 * 60 * 1000, // 5 minutes
-  });
+    });
 
   const logout = async () => {
     try {
-      await fetch("/api/auth/logout", {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -80,7 +83,6 @@ export function useAuth() {
       window.location.reload();
     }
   };
-
   return {
     user,
     isLoading,

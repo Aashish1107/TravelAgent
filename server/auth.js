@@ -1,3 +1,4 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
@@ -256,8 +257,18 @@ function setupAuth(app) {
         // Generate tokens
         const { accessToken, refreshToken } = generateTokens(req.user.id);
         
-        // Redirect with tokens (in production, use secure cookies or redirect to frontend with tokens)
-        res.redirect(`/?accessToken=${accessToken}&refreshToken=${refreshToken}`);
+        // Store tokens in secure cookies and redirect to the frontend
+        res.cookie('accessToken', accessToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 15 * 60 * 1000 // 15 minutes
+        });
+        res.cookie('refreshToken', refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
+        res.redirect('/');
       }
     );
   }
@@ -291,7 +302,7 @@ function setupAuth(app) {
 
       // Remove password from response
       const { password, ...userWithoutPassword } = user;
-      res.json(userWithoutPassword);
+      res.json({user: userWithoutPassword});
     } catch (error) {
       console.error('Get user error:', error);
       res.status(500).json({ message: 'Internal server error' });

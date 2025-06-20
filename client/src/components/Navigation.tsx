@@ -6,9 +6,7 @@ import { Compass, Bell } from "lucide-react";
 export default function Navigation() {
   const { user, isAuthenticated } = useAuth();
 
-  const handleLogout = () => {
-    window.location.href = "/api/logout";
-  };
+  const handleLogout = useAuth().logout; 
 
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">

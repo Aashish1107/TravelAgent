@@ -1,4 +1,3 @@
-const { cidr } = require('drizzle-orm/pg-core');
 const { drizzle } = require('drizzle-orm/postgres-js');
 const schema = require("./schema").default || require("./schema");
 const {Client} = require('pg');
