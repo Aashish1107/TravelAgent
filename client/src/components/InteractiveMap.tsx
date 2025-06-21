@@ -20,7 +20,7 @@ export default function InteractiveMap({ locations, selectedLocation, onLocation
     <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-primary" />
+          <MapPin className="h-5 w-5 text-primary icon1 icon1:hover" />
           Interactive Map
         </CardTitle>
       </CardHeader>
@@ -35,11 +35,11 @@ export default function InteractiveMap({ locations, selectedLocation, onLocation
           
           {/* Map Controls */}
           <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-2 space-y-2">
-            <Button size="icon" variant="outline" className="w-8 h-8">
-              <Plus className="h-4 w-4" />
+            <Button size="icon" variant="outline" className="w-7 h-7 flex-1 bg-primary bg-primary:hover/90 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg">
+              <Plus className="h-4 w-4 icon2" />
             </Button>
-            <Button size="icon" variant="outline" className="w-8 h-8">
-              <Minus className="h-4 w-4" />
+            <Button size="icon" variant="outline" className="w-7 h-7 flex-1 bg-primary bg-primary:hover/90 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg">
+              <Minus className="h-4 w-4 icon2" />
             </Button>
           </div>
 

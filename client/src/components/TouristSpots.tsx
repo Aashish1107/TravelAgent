@@ -62,7 +62,7 @@ export default function TouristSpots({ spots, isLoading, onSaveSpot }: TouristSp
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-primary" />
+            <MapPin className="h-5 w-5 text-primary icon1 icon1:hover" />
             Nearby Tourist Spots
           </CardTitle>
           <Badge variant="secondary" className="bg-gray-100">
@@ -74,7 +74,7 @@ export default function TouristSpots({ spots, isLoading, onSaveSpot }: TouristSp
       <CardContent>
         {spots.length === 0 ? (
           <div className="text-center py-12">
-            <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4 icon1" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No spots found</h3>
             <p className="text-gray-500">
               Try searching for a different location to discover amazing tourist attractions.

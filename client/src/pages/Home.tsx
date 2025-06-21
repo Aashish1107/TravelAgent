@@ -268,7 +268,7 @@ export default function Home() {
           className="w-14 h-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg"
           onClick={handlePlanNewTrip}
         >
-          <MapPin className="h-6 w-6" />
+          <MapPin className="h-6 w-6 icon1" />
         </Button>
       </div>
     </div>

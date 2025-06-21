@@ -14,8 +14,8 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <Compass className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-gray-900">TravelAgent Pro</span>
+              <Compass className="h-8 w-8 text-primary icon1 icon1:hover" />
+              <span className="text-xl font-bold text-gray-900">TravelSphere</span>
             </div>
           </div>
           
@@ -36,19 +36,23 @@ export default function Navigation() {
               <>
                 <div className="flex items-center space-x-3">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.profileImageUrl || undefined} alt={user.firstName || "User"} />
+                    <AvatarImage src={user.profileImageUrl} alt={user.firstName} />
                     <AvatarFallback>
-                      {user.firstName?.[0] || user.email?.[0] || "U"}
+                      {user.firstName?.[0] || user.email?.[0] || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <span className="hidden sm:block text-sm font-medium text-gray-700">
                     {user.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : user.email}
                   </span>
                 </div>
-                <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700">
-                  <Bell className="h-5 w-5" />
+                <Button 
+                variant="ghost" 
+                size="icon" 
+                className="flex-1 bg-primary hover:bg-primary/90 h-12 text-base font-semibold transform hover:scale-[1.05] transition-all shadow-lg"
+                aria-label="View notifications">
+                  <Bell className="text-gray-700 icon3" />
                 </Button>
-                <Button variant="outline" onClick={handleLogout} className="text-sm">
+                <Button variant="outline" onClick={handleLogout} className="flex-1 button-primary button-primary:hover/90 h-12 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg">
                   Logout
                 </Button>
               </>

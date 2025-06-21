@@ -150,6 +150,43 @@
   background-color: hsl(0, 62.8%, 30.6%), 80%;
   scale: 1.05;
 }
+
+button-bg{
+  background-color: hsl(0, 0%, 98%);
+  color: hsl(var(--foreground));
+}
+
+button-bg:hover {
+  background-color: hsl(0, 0%, 98%), 80%;
+  scale: 1.05;
+}
+
+button-agent{
+  background-color: hsl(290, 98%, 47%);
+  color: hsl(var(--foreground));
+}
+
+button-agent:hover {
+  background-color: hsl(290, 98%, 47%), 80%;
+  scale: 1.05;
+}
+
+.icon5 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.5rem;
+  color: hsl(290, 98%, 47%);
+  transition: color 0.3s ease;
+}
+
+.icon5:hover {
+  color: hsl(290, 98%, 47%);
+  transform: scale(1.1);
+  transition: transform 0.2s ease, color 0.3s ease;
+}
 .icon1 {
   display: inline-flex;
   align-items: center;

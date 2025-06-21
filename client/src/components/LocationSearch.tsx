@@ -74,7 +74,7 @@ export default function LocationSearch({ onLocationSearch, isLoading }: Location
                 type="button"
                 variant="outline"
                 onClick={getCurrentLocation}
-                className="w-full"
+                className="w-full button-secondary button-secondary:hover"
                 disabled={isLoading}
               >
                 <MapPin className="h-4 w-4 mr-2" />
@@ -114,7 +114,7 @@ export default function LocationSearch({ onLocationSearch, isLoading }: Location
               type="button"
               onClick={(e) => handleSubmit('tourist', e)}
               disabled={isLoading}
-              className="flex-1 bg-primary hover:bg-primary/90 h-12 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg"
+              className="flex-1 button-primary button-primary:hover/90 h-12 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg"
             >
               <MapPin className="h-5 w-5 mr-2" />
               {isLoading ? "Searching..." : "Find Tourist Spots"}
@@ -123,7 +123,7 @@ export default function LocationSearch({ onLocationSearch, isLoading }: Location
               type="button"
               onClick={(e) => handleSubmit('weather', e)}
               disabled={isLoading}
-              className="flex-1 bg-secondary hover:bg-secondary/90 h-12 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg"
+              className="flex-1 button-accent button-accent:hover/90 h-12 text-base font-semibold transform hover:scale-[1.02] transition-all shadow-lg"
             >
               <Cloud className="h-5 w-5 mr-2" />
               {isLoading ? "Searching..." : "Get Weather Info"}
@@ -136,7 +136,7 @@ export default function LocationSearch({ onLocationSearch, isLoading }: Location
               onClick={(e) => handleSubmit('both', e)}
               disabled={isLoading}
               variant="outline"
-              className="w-full h-12 text-base font-semibold border-2 hover:bg-gray-50"
+              className="button-destructive button-destructive:hover w-full h-12 text-base font-semibold border-2 hover:bg-gray-50"
             >
               🚀 Get Complete Travel Info (Both)
             </Button>
