@@ -123,13 +123,13 @@ export default function AgentChat() {
   const getAgentIcon = (agentType?: string) => {
     switch (agentType) {
       case 'tourist':
-        return <MapPin className="h-4 w-4 text-white" />;
+        return <MapPin className="h-2 w-2 text-white icon1" />;
       case 'weather':
-        return <Cloud className="h-4 w-4 text-white" />;
+        return <Cloud className="h-2 w-2 text-white icon3" />;
       case 'supervisor':
-        return <Bot className="h-4 w-4 text-white" />;
+        return <Bot className="h-2 w-2 text-white icon2" />;
       default:
-        return <Bot className="h-4 w-4 text-white" />;
+        return <Bot className="h-2 w-2 text-white icon4" />;
     }
   };
 
@@ -159,7 +159,7 @@ export default function AgentChat() {
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <Bot className="h-5 w-5 text-primary" />
+            <Bot className="h-5 w-5 text-primary icon5" />
             AI Travel Agents
           </CardTitle>
           <Button size="sm" variant="ghost">
@@ -237,7 +237,7 @@ export default function AgentChat() {
           {isTyping && (
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-                <Bot className="h-4 w-4 text-white" />
+                <Bot className="h-4 w-4 text-white icon5" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
@@ -272,7 +272,7 @@ export default function AgentChat() {
             <Button
               onClick={handleSendMessage}
               disabled={!newMessage.trim() || isTyping}
-              className="bg-primary hover:bg-primary/90"
+              className="button-primary button-primary:hover/90 transition-all shadow-lg"
             >
               <Send className="h-4 w-4" />
             </Button>

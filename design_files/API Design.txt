@@ -7,13 +7,13 @@ POST /api/oauth/google
 
 //Location
 
-POST /api/search/location=?      --GMaps
+POST /api/search/location=?        --GMaps
 GET  /api/trips
 POST /api/trips
 PUT  /api/trips
 DEL  /api/trips
-GET  /api/weather/location=?      --Py Server
-GET  /api/tourist-spots/location  --Py Server
+GET  /api/weather/location=?        --Py Server
+GET  /api/tourist-spots/location=?  --Py Server
 
 //Tourist Spots
 
