@@ -1,0 +1,31 @@
+//Auth
+
+POST /api/auth/login
+POST /api/auth/logout
+GET  /api/auth/user
+POST /api/oauth/google
+
+//Location
+
+POST /api/search/location=?      --GMaps
+GET  /api/trips
+POST /api/trips
+PUT  /api/trips
+DEL  /api/trips
+GET  /api/weather/location=?      --Py Server
+GET  /api/tourist-spots/location  --Py Server
+
+//Tourist Spots
+
+POST /api/spots/save
+GET /api/spots/saved
+DEL /api/spots/:id
+
+//Agents
+
+POST /api/agent/message=?
+GET /api/agent/conversations
+
+
+
+
