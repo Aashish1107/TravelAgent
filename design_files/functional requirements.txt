@@ -1,0 +1,11 @@
+//functional requirements
+
+User should be able to find tourist spots and weather details after searching for a location.
+User should be able to make trips/plans.
+User should be able to converse with the agents
+
+
+//Non functional requriements
+
+Low latency and quick messages.
+clear end points so Booking.com can be added and used to book flights as well as hotels.
