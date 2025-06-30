@@ -19,6 +19,8 @@ export default function Home() {
   const [currentLocation, setCurrentLocation] = useState<LocationData | null>(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
 
   const handleLocationSearch = async (locationData: LocationData, searchType: 'tourist' | 'weather' | 'both') => {
     setIsLoading(true);
@@ -29,6 +31,7 @@ export default function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`
         },
         credentials: 'include',
         body: JSON.stringify({
@@ -36,7 +39,20 @@ export default function Home() {
           searchType,
         }),
       });
-
+      if (response.status==401) {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/search/location`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${refreshToken}`
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            ...locationData,
+            searchType,
+          }),
+        });
+      }
       const data = await response.json();
       if (data.success) {
         // Simulate some search results for the UI
@@ -103,6 +119,7 @@ export default function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`
         },
         credentials: 'include',
         body: JSON.stringify({
@@ -111,7 +128,21 @@ export default function Home() {
           locations: [currentLocation],
         }),
       });
-
+      if (response.status==401) {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/trips`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${refreshToken}`
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            name: `Trip to ${currentLocation.location}`,
+            description: `Exploring ${currentLocation.location} and nearby attractions`,
+            locations: [currentLocation],
+          }),
+        });
+      }
       if (response.ok) {
         alert('Trip saved successfully!');
       }

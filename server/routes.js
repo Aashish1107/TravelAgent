@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const { createServer } = require('http');
 const { storage } = require('./storage');
 const { setupAuth, authenticateJWT, optionalAuth } = require('./auth');
 const { z } = require('zod');
+const { Console } = require('console');
 
 const LocationSearchSchema = z.object({
   location: z.string().min(1),
@@ -45,11 +47,11 @@ async function registerRoutes(app) {
         latitude: validatedData.latitude?.toString(),
         longitude: validatedData.longitude?.toString(),
       });
-
+      
       // Integrate with Python agent system
       let agentResponse = null;
       try {
-        const pythonServerUrl = process.env.PYTHON_SERVER_URL || 'http://localhost:8000';
+        const pythonServerUrl = process.env.PYTHON_SERVER_URL;
         
         if (validatedData.searchType === 'tourist' || validatedData.searchType === 'both') {
           const touristResponse = await fetch(`${pythonServerUrl}/api/tourist-spots`, {
@@ -92,7 +94,7 @@ async function registerRoutes(app) {
           }
         }
       } catch (error) {
-        console.log('Python agent server not available, using fallback data');
+        console.log('Python agent server not available, using fallback data', error.message);
       }
 
       res.json({
