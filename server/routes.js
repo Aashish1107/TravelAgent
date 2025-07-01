@@ -85,7 +85,6 @@ async function registerRoutes(app) {
               longitude: validatedData.longitude
             }),
           });
-          
           if (weatherResponse.ok) {
             const weatherData = await weatherResponse.json();
             agentResponse = agentResponse ? 

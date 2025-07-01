@@ -126,7 +126,6 @@ class TouristAgent:
             
             response = requests.get(url, params=params)
             data = response.json()
-            
             if data['status'] == 'OK' and data['results']:
                 location_data = data['results'][0]['geometry']['location']
                 return {
@@ -158,8 +157,8 @@ class TouristAgent:
                 'type': 'tourist_attraction',
                 'key': self.google_api_key
             }
-            
             response = requests.get(url, params=params)
+            logger.info(f"Response: {response}")
             data = response.json()
             
             spots = []

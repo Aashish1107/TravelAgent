@@ -33,9 +33,9 @@ class WeatherAgent:
     """
     
     def __init__(self):
-        self.openweather_api_key = os.getenv('OPENWEATHER_API_KEY')
-        self.weather_base_url = "https://api.openweathermap.org/data/2.5"
-        self.geocoding_url = "https://api.openweathermap.org/geo/1.0"
+        self.openweather_api_key = os.getenv('WEATHER_API_KEY')
+        self.weather_base_url = "https://weather.googleapis.com/v1"
+        self.geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json"
         self.ready = False
         
     async def initialize(self):
@@ -120,23 +120,21 @@ class WeatherAgent:
             if not self.openweather_api_key:
                 return None
             
-            url = f"{self.geocoding_url}/direct"
+            url = f"{self.geocoding_url}"
             params = {
-                'q': location,
-                'limit': 1,
-                'appid': self.openweather_api_key
+                'address': location,
+                'key': self.openweather_api_key,
             }
             
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
             data = response.json()
-            
             if data:
                 return {
-                    'lat': data[0]['lat'],
-                    'lon': data[0]['lon'],
-                    'name': data[0]['name'],
-                    'country': data[0]['country']
+                    'lat': data['results'][0]['geometry']['location']['lat'],
+                    'lon': data['results'][0]['geometry']['location']['lng'],
+                    'name': data['results'][0]['formatted_address'] if data['results'][0]['formatted_address'] else 'Unknown',
+                    'country': data['results'][0]['address_components'][-1]['long_name'] if data['results'][0]['address_components'] else 'Unknown'
                 }
             
             return None
@@ -152,12 +150,11 @@ class WeatherAgent:
                 return self._get_fallback_weather_data(location)
             
             # Get current weather
-            current_url = f"{self.weather_base_url}/weather"
+            current_url = f"{self.weather_base_url}/currentConditions:lookup"
             current_params = {
-                'lat': latitude,
-                'lon': longitude,
-                'appid': self.openweather_api_key,
-                'units': 'metric'
+                'location.latitude': latitude,
+                'location.longitude': longitude,
+                'key': self.openweather_api_key,
             }
             
             current_response = requests.get(current_url, params=current_params, timeout=10)
@@ -165,12 +162,11 @@ class WeatherAgent:
             current_data = current_response.json()
             
             # Get forecast data
-            forecast_url = f"{self.weather_base_url}/forecast"
+            forecast_url = f"{self.weather_base_url}/forecast/days:lookup"
             forecast_params = {
-                'lat': latitude,
-                'lon': longitude,
-                'appid': self.openweather_api_key,
-                'units': 'metric'
+                'location.latitude': latitude,
+                'location.longitude': longitude,
+                'key': self.openweather_api_key,
             }
             
             forecast_response = requests.get(forecast_url, params=forecast_params, timeout=10)
@@ -188,9 +184,9 @@ class WeatherAgent:
         """Format OpenWeatherMap API response into our format"""
         try:
             # Current weather
-            main = current_data['main']
-            weather = current_data['weather'][0]
-            wind = current_data.get('wind', {})
+            logger.info(f"Current Data: {current_data}")
+            logger.info(f"Forecast data: {forecast_data}")
+            weatherIcon = current_data['weatherCondition']['iconBaseUri']
             
             # Generate hourly forecast from 5-day forecast (3-hour intervals)
             hourly_forecast = []
@@ -243,22 +239,22 @@ class WeatherAgent:
             
             return {
                 'location': location,
-                'temperature': round(main['temp']),
-                'description': weather['description'].title(),
-                'humidity': main['humidity'],
-                'windSpeed': round(wind.get('speed', 0) * 3.6, 1),  # Convert m/s to km/h
-                'visibility': round(current_data.get('visibility', 10000) / 1000, 1),  # Convert m to km
-                'feelsLike': round(main['feels_like']),
-                'pressure': main['pressure'],
-                'uvIndex': 0,  # UV index not available in basic plan
+                'temperature': current_data['temperature']['degrees'],
+                'description': current_data['description']['text'],
+                'humidity': current_data['relativeHumidity'],
+                'windSpeed': current_data['wind']['speed']['value'],
+                'visibility': current_data['visibility']['distance'],
+                'feelsLike': current_data['feelsLikeTemperature']['degrees'],
+                'pressure': current_data['airPressure']['meanSeaLevelMillibars'],
+                'uvIndex': current_data['uvIndex'],
                 'sunrise': datetime.fromtimestamp(current_data['sys']['sunrise']).strftime('%H:%M'),
                 'sunset': datetime.fromtimestamp(current_data['sys']['sunset']).strftime('%H:%M'),
                 'hourlyForecast': hourly_forecast,
                 'dailyForecast': daily_forecast,
-                'icon': self._map_weather_icon(weather['icon']),
+                'icon': weatherIcon,
                 'conditions': {
                     'cloudiness': current_data.get('clouds', {}).get('all', 0),
-                    'rain_1h': current_data.get('rain', {}).get('1h', 0),
+                    'rain_1h': current_data['percipitation']['percent'],
                     'snow_1h': current_data.get('snow', {}).get('1h', 0)
                 }
             }
