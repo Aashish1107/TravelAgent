@@ -184,29 +184,17 @@ class WeatherAgent:
         """Format OpenWeatherMap API response into our format"""
         try:
             # Current weather
-            logger.info(f"Current Data: {current_data}")
-            logger.info(f"Forecast data: {forecast_data}")
+            #logger.info(f"Current Data: {current_data}")
+            #logger.info(f"Forecast data: {forecast_data}")
             weatherIcon = current_data['weatherCondition']['iconBaseUri']
-            
-            # Generate hourly forecast from 5-day forecast (3-hour intervals)
-            hourly_forecast = []
-            for item in forecast_data['list'][:8]:  # Next 24 hours (8 * 3-hour intervals)
-                forecast_time = datetime.fromtimestamp(item['dt'])
-                hourly_forecast.append({
-                    'time': forecast_time.strftime('%H:%M'),
-                    'temperature': round(item['main']['temp']),
-                    'description': item['weather'][0]['description'],
-                    'icon': self._map_weather_icon(item['weather'][0]['icon']),
-                    'humidity': item['main']['humidity'],
-                    'wind_speed': item.get('wind', {}).get('speed', 0)
-                })
             
             # Generate daily forecast
             daily_forecast = []
             daily_temps = {}
             
-            for item in forecast_data['list']:
-                date = datetime.fromtimestamp(item['dt']).date()
+            for item in forecast_data['forecastDays']:
+                #logger.info(f"Processing forecast item: {item['daytimeForecast']['weatherCondition']['description']}")
+                date = datetime.fromisoformat(item['interval']['startTime'][:-1]).date()
                 if date not in daily_temps:
                     daily_temps[date] = {
                         'temps': [],
@@ -214,9 +202,12 @@ class WeatherAgent:
                         'icons': []
                     }
                 
-                daily_temps[date]['temps'].append(item['main']['temp'])
-                daily_temps[date]['descriptions'].append(item['weather'][0]['description'])
-                daily_temps[date]['icons'].append(item['weather'][0]['icon'])
+                daily_temps[date]['temps'].append(int(item['maxTemperature']['degrees']))
+                daily_temps[date]['temps'].append(int(item['minTemperature']['degrees']))
+                daily_temps[date]['descriptions'].append(item['daytimeForecast']['weatherCondition']['description']['text'])
+                daily_temps[date]['descriptions'].append(item['nighttimeForecast']['weatherCondition']['description']['text'])
+                daily_temps[date]['icons'].append(item['daytimeForecast']['weatherCondition']['iconBaseUri'])
+                daily_temps[date]['icons'].append(item['nighttimeForecast']['weatherCondition']['iconBaseUri'])
             
             for date, data in list(daily_temps.items())[:5]:  # Next 5 days
                 avg_temp = sum(data['temps']) / len(data['temps'])
@@ -236,26 +227,25 @@ class WeatherAgent:
                     'description': most_common_desc,
                     'icon': self._map_weather_icon(most_common_icon)
                 })
-            
+
             return {
                 'location': location,
                 'temperature': current_data['temperature']['degrees'],
-                'description': current_data['description']['text'],
+                'description': current_data['weatherCondition']['description']['text'],
                 'humidity': current_data['relativeHumidity'],
                 'windSpeed': current_data['wind']['speed']['value'],
                 'visibility': current_data['visibility']['distance'],
                 'feelsLike': current_data['feelsLikeTemperature']['degrees'],
                 'pressure': current_data['airPressure']['meanSeaLevelMillibars'],
                 'uvIndex': current_data['uvIndex'],
-                'sunrise': datetime.fromtimestamp(current_data['sys']['sunrise']).strftime('%H:%M'),
-                'sunset': datetime.fromtimestamp(current_data['sys']['sunset']).strftime('%H:%M'),
-                'hourlyForecast': hourly_forecast,
+                'sunrise': datetime.fromisoformat(forecast_data['forecastDays'][0]['sunEvents']['sunriseTime']).strftime('%H:%M'),
+                'sunset': datetime.fromisoformat(forecast_data['forecastDays'][0]['sunEvents']['sunsetTime']).strftime('%H:%M'),
                 'dailyForecast': daily_forecast,
                 'icon': weatherIcon,
                 'conditions': {
-                    'cloudiness': current_data.get('clouds', {}).get('all', 0),
-                    'rain_1h': current_data['percipitation']['percent'],
-                    'snow_1h': current_data.get('snow', {}).get('1h', 0)
+                    'cloudiness': current_data['cloudCover'],
+                    'rain_1h': current_data['precipitation']['qpf']['quantity'],
+                    'snow_1h': current_data['precipitation']['snowQpf']['quantity']
                 }
             }
             
