@@ -17,6 +17,7 @@ interface LocationData {
 
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState<LocationData | null>(null);
+  const [weatherData, setWeatherData] = useState<any>(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const accessToken = localStorage.getItem("accessToken");
@@ -57,47 +58,22 @@ export default function Home() {
       if (data.success) {
         // Simulate some search results for the UI
         setSearchResults([
-          {
-            id: '1',
-            name: 'Golden Gate Bridge',
-            description: 'Iconic suspension bridge and symbol of San Francisco',
-            rating: 4.8,
-            distance: 2.1,
-            imageUrl: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200',
-            latitude: 37.8199,
-            longitude: -122.4783,
-          },
-          {
-            id: '2',
-            name: 'Fisherman\'s Wharf',
-            description: 'Historic waterfront with shops, restaurants, and sea lions',
-            rating: 4.2,
-            distance: 3.5,
-            imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200',
-            latitude: 37.8080,
-            longitude: -122.4177,
-          },
-          {
-            id: '3',
-            name: 'Alcatraz Island',
-            description: 'Famous former federal prison with guided tours',
-            rating: 4.6,
-            distance: 4.2,
-            imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200',
-            latitude: 37.8267,
-            longitude: -122.4233,
-          },
-          {
-            id: '4',
-            name: 'Lombard Street',
-            description: 'World\'s most crooked street with beautiful gardens',
-            rating: 4.3,
-            distance: 1.8,
-            imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200',
-            latitude: 37.8021,
-            longitude: -122.4187,
-          },
+          ...data.data.spots.map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            latitude: item.latitude,
+            longitude: item.longitude,
+            imageUrl: item.imageUrl,
+            rating: item.rating,
+            distance: item.distance,
+          })),
         ]);
+        if (searchType === 'weather' || searchType === 'both') {
+          setWeatherData(data.data.weather);
+        } else {
+          setWeatherData(null);
+        }
       }
     } catch (error) {
       console.error('Error searching location:', error);
@@ -235,7 +211,7 @@ export default function Home() {
           <div className="space-y-6">
             <AgentChat />
             
-            <WeatherWidget location={currentLocation?.location} />
+            <WeatherWidget data={weatherData} />
 
             {/* Quick Actions */}
             <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">

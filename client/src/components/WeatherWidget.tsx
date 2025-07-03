@@ -11,7 +11,7 @@ interface WeatherData {
   windSpeed: number;
   visibility: number;
   feelsLike: number;
-  hourlyForecast: {
+  dailyForecast: {
     time: string;
     temperature: number;
     icon: string;
@@ -20,9 +20,10 @@ interface WeatherData {
 
 interface WeatherWidgetProps {
   location?: string;
+  data?: WeatherData;
 }
 
-export default function WeatherWidget({ location }: WeatherWidgetProps) {
+export default function WeatherWidget({ location, data }: WeatherWidgetProps) {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +33,7 @@ export default function WeatherWidget({ location }: WeatherWidgetProps) {
     setError(null);
     
     try {
-      const response = await fetch(`/api/weather/${encodeURIComponent(locationQuery)}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/weather/${encodeURIComponent(locationQuery)}`, {
         credentials: 'include',
       });
       
@@ -51,10 +52,10 @@ export default function WeatherWidget({ location }: WeatherWidgetProps) {
   };
 
   useEffect(() => {
-    if (location) {
-      fetchWeatherData(location);
+    if (data) {
+      setWeatherData(data);
     }
-  }, [location]);
+  }, [data]);
 
   const getWeatherIcon = (iconType: string) => {
     switch (iconType) {
@@ -168,13 +169,13 @@ export default function WeatherWidget({ location }: WeatherWidgetProps) {
             <div className="pt-4 border-t border-blue-400/30">
               <div className="text-sm font-medium mb-3">Next 6 Hours</div>
               <div className="flex justify-between text-xs">
-                {weatherData.hourlyForecast.map((hour, index) => (
+                {weatherData.dailyForecast.map((day, index) => (
                   <div key={index} className="text-center">
-                    <div className="text-blue-200 mb-1">{hour.time}</div>
+                    <div className="text-blue-200 mb-1">{day.time}</div>
                     <div className="flex justify-center mb-1">
-                      {getWeatherIcon(hour.icon)}
+                      {getWeatherIcon(day.icon)}
                     </div>
-                    <div className="font-medium">{hour.temperature}°</div>
+                    <div className="font-medium">{day.temperature}°</div>
                   </div>
                 ))}
               </div>
