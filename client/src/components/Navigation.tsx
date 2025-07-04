@@ -4,9 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Compass, Bell } from "lucide-react";
 
 export default function Navigation() {
-  const { user, isAuthenticated } = useAuth();
+  const user = useAuth().user;
+  const isAuthenticated = useAuth().isAuthenticated;
 
-  const handleLogout = useAuth().logout; 
+  const handleLogout = useAuth().logout;
 
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
@@ -20,13 +21,13 @@ export default function Navigation() {
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <a href="/dashboard" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Dashboard
             </a>
-            <a href="#" className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <a href="/myTrips" className="text-gray-700 hover:text-primary transition-colors font-medium">
               My Trips
             </a>
-            <a href="#" className="text-gray-700 hover:text-primary transition-colors font-medium">
+            <a href="/pai" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Agents
             </a>
           </div>
@@ -36,13 +37,13 @@ export default function Navigation() {
               <>
                 <div className="flex items-center space-x-3">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.profileImageUrl} alt={user.firstName} />
+                    <AvatarImage src={user.user.profileImageUrl} alt={user.user.firstName} />
                     <AvatarFallback>
-                      {user.firstName?.[0] || user.email?.[0] || 'U'}
+                      {user.user.firstName?.[0] || user.user.email?.[0] || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <span className="hidden sm:block text-sm font-medium text-gray-700">
-                    {user.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : user.email}
+                    {user.user.firstName ? `${user.user.firstName} ${user.user.lastName || ''}`.trim() : user.user.email}
                   </span>
                 </div>
                 <Button 
