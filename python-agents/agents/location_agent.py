@@ -1,5 +1,5 @@
 """
-Tourist Agent - Specializes in finding tourist attractions and points of interest
+Location Agent - Specializes in finding tourist attractions and points of interest
 """
 
 import asyncio
@@ -25,14 +25,14 @@ class TouristSpot:
     photo_url: str
     types: List[str]
 
-class TouristAgent:
+class LocationAgent:
     """
     Agent specialized in finding tourist attractions using Google Places API
     """
     
     def __init__(self):
         self.google_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
-        self.places_base_url = "https://maps.googleapis.com/maps/api/place"
+        self.places_base_url = os.getenv('GOOGLE_PLACES_BASE_URL')
         self.ready = False
         
     async def initialize(self):

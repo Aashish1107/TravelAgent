@@ -13,7 +13,7 @@ import os
 from dotenv import load_dotenv
 
 from agents.supervisor import SupervisorAgent
-from agents.tourist_agent import TouristAgent
+from agents.location_agent import LocationAgent
 from agents.weather_agent import WeatherAgent
 from mcp.server import MCPServer
 
@@ -50,7 +50,7 @@ class TouristSpotsRequest(BaseModel):
     location: str
     latitude: float = None
     longitude: float = None
-    radius_km: float = 5.0
+    radius_km: float = 50.0
     max_results: int = 20
 
 class WeatherRequest(BaseModel):
@@ -65,14 +65,14 @@ class AgentMessageRequest(BaseModel):
 
 # Initialize agents
 supervisor_agent = SupervisorAgent()
-tourist_agent = TouristAgent()
+location_agent = LocationAgent()
 weather_agent = WeatherAgent()
 mcp_server = MCPServer()
 
 # Agent registry
 agents = {
     "supervisor": supervisor_agent,
-    "tourist": tourist_agent,
+    "location": location_agent,
     "weather": weather_agent
 }
 
@@ -86,7 +86,7 @@ async def startup_event():
     
     # Initialize agents
     await supervisor_agent.initialize()
-    await tourist_agent.initialize()
+    await location_agent.initialize()
     await weather_agent.initialize()
     
     logger.info("All agents initialized successfully")
@@ -107,7 +107,7 @@ async def health_check():
         "status": "healthy",
         "agents": {
             "supervisor": supervisor_agent.is_ready(),
-            "tourist": tourist_agent.is_ready(),
+            "location": location_agent.is_ready(),
             "weather": weather_agent.is_ready()
         },
         "mcp_server": mcp_server.is_ready()
@@ -120,7 +120,7 @@ async def get_tourist_spots(request: TouristSpotsRequest):
         logger.info(f"Getting tourist spots for: {request.location}")
         
         # Use tourist agent to find spots
-        spots = await tourist_agent.find_tourist_spots(
+        spots = await location_agent.find_tourist_spots(
             location=request.location,
             latitude=request.latitude,
             longitude=request.longitude,

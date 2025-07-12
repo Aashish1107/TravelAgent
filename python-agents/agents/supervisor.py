@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Optional
 from dataclasses import dataclass
 import json
 
-from .tourist_agent import TouristAgent
+from .location_agent import LocationAgent
 from .weather_agent import WeatherAgent
 
 logger = logging.getLogger(__name__)
