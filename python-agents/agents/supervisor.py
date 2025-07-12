@@ -38,7 +38,7 @@ class SupervisorAgent:
             logger.info("Initializing Supervisor Agent...")
             
             # Initialize sub-agents
-            self.tourist_agent = TouristAgent()
+            self.tourist_agent = LocationAgent()
             self.weather_agent = WeatherAgent()
             
             await self.tourist_agent.initialize()

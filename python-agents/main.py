@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from agents.supervisor import SupervisorAgent
 from agents.location_agent import LocationAgent
 from agents.weather_agent import WeatherAgent
-from mcp.server import MCPServer
+from mcpMock.server import MCPServer
 
 # Load environment variables
 load_dotenv()
