@@ -32,7 +32,7 @@ class LocationAgent:
     
     def __init__(self):
         self.google_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
-        self.places_base_url = os.getenv('GOOGLE_PLACES_BASE_URL')
+        self.places_base_url = os.getenv('GOOGLE_MAPS_BASE_URL')
         self.ready = False
         
     async def initialize(self):
@@ -89,7 +89,7 @@ class LocationAgent:
             }
     
     async def find_tourist_spots(self, location: str, latitude: float = None, longitude: float = None, 
-                                radius_km: float = 5.0, max_results: int = 20) -> List[Dict[str, Any]]:
+                                radius_km: float = 50.0, max_results: int = 20) -> List[Dict[str, Any]]:
         """
         Find tourist spots near a location using Google Places API
         """
